@@ -187,6 +187,11 @@ public class BoardController implements Initializable {
         System.out.println("Old Place in Pixels: " + piece.getOldX() + " " + piece.getOldY());
         System.out.println("Old Place Board Place: " + oldPlaceOnBoardX + " " + oldPlaceOnBoardY);
 
+        //Check if out of bounds
+        if(newX > 3 || newY > 3 || newX < 0 || newY < 0){
+            return new MoveResult(PossibleMoves.NONE);
+        }
+        
         //Invalid Moves
         if (board[newX][newY].hasPiece()) {
             if (!validSwapMove(piece, newX, newY)) {
