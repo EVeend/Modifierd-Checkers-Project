@@ -410,7 +410,7 @@ public class BoardController implements Initializable {
                     }
                 }
                 break;
-            //EDWARD EDIT MO PA TO
+            //EDWARD EDIT MO PA TO at pangit ka
             case BLACK:
                 for (Piece storedPiece : blackPieceStorage.getPieceStorage()) {
                     int oldXStoredPiece = toBoard(storedPiece.getOldX());
