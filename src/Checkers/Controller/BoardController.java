@@ -188,10 +188,10 @@ public class BoardController implements Initializable {
         System.out.println("Old Place Board Place: " + oldPlaceOnBoardX + " " + oldPlaceOnBoardY);
 
         //Check if out of bounds
-        if(newX > 3 || newY > 3 || newX < 0 || newY < 0){
+        if (newX > 3 || newY > 3 || newX < 0 || newY < 0) {
             return new MoveResult(PossibleMoves.NONE);
         }
-        
+
         //Invalid Moves
         if (board[newX][newY].hasPiece()) {
             if (!validSwapMove(piece, newX, newY)) {
@@ -430,15 +430,20 @@ public class BoardController implements Initializable {
 
         System.out.println("Position on Board: " + x0 + " " + y0);
         //Check if double hop is valid
-        if ((y0 == 0 && board[x0][y0 + 2].hasPiece()) && (newX == x0 && newY == y0 + 3)) {
-            return true;
-        } else if ((x0 == 0 && board[x0 + 2][y0].hasPiece()) && (newX == x0 + 3 && newY == y0)) {
-            return true;
-        } else if (y0 == 3 && board[x0][y0 - 2].hasPiece() && (newX == x0 && newY == y0 - 3)) {
-            return true;
-        } else if (x0 == 3 && board[x0 - 2][y0].hasPiece() && (newX == x0 - 3 && newY == y0)) {
-            return true;
-        } else {
+        if (isNoForwardMove(piece)) {
+            if ((y0 == 0 && board[x0][y0 + 2].hasPiece()) && (newX == x0 && newY == y0 + 3)) {
+                return true;
+            } else if ((x0 == 0 && board[x0 + 2][y0].hasPiece()) && (newX == x0 + 3 && newY == y0)) {
+                return true;
+            } else if (y0 == 3 && board[x0][y0 - 2].hasPiece() && (newX == x0 && newY == y0 - 3)) {
+                return true;
+            } else if (x0 == 3 && board[x0 - 2][y0].hasPiece() && (newX == x0 - 3 && newY == y0)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else{
             return false;
         }
     }
