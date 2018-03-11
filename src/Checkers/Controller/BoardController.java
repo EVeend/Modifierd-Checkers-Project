@@ -114,12 +114,14 @@ public class BoardController implements Initializable {
             if (piece.getType() == PieceType.WHITE && moveOrder) {
                 System.out.println("White made a move");
                 if (doMove(whitePlayer, piece)) {
+                    //From this line
                     whitePlayer.addOneToMove();
                     moveOrder = false;
                     System.out.println("Move order now false");
                     System.out.println("White made: " + whitePlayer.getNumberOfMoves() + " moves");
                     whitePlayer.addOneToNumberOfWinningPieces(piece, board[newX][newY]);
                     System.out.println("White Player Winning Pieces: " + whitePlayer.getNumberOfWinningPieces());
+                    //to this line, eto yung ilalagay sa pass method
 
                     //Iterate through this piece storage
                     ArrayList<Piece> pieceStorage = whitePieceStorage.getPieceStorage();
@@ -446,6 +448,11 @@ public class BoardController implements Initializable {
         else{
             return false;
         }
+    }
+    
+    //Edit mo to
+    public void pass(Player player){
+        
     }
 
     private int toBoard(double pixel) {
