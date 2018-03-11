@@ -451,7 +451,16 @@ public class BoardController implements Initializable {
     }
     
     //Edit mo to
-    public void pass(Player player){
+    public void pass(){
+        
+        //Pag white ang nag pass
+        if(moveOrder){
+            
+        }
+        //Pag black ang nag pass
+        else if(!moveOrder){
+            
+        }
         
     }
 
