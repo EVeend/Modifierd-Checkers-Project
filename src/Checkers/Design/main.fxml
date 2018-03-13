@@ -17,7 +17,7 @@
             <Font name="Optima Regular" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="180.0" layoutY="200.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="140.0" style="-fx-background-color: coral;" text="Human vs Computer">
+      <Button fx:id="humanVcomputer" layoutX="180.0" layoutY="200.0" mnemonicParsing="false" onAction="#humanVcomputerBoard" prefHeight="27.0" prefWidth="140.0" style="-fx-background-color: coral;" text="Human vs Computer">
          <font>
             <Font name="Optima Regular" size="13.0" />
          </font>

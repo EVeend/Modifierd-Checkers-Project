@@ -6,6 +6,7 @@
 package Checkers.Player;
 
 import Checkers.Board.Piece;
+import Checkers.Board.PieceStorage;
 import Checkers.Board.PieceType;
 import Checkers.Board.Tile;
 
@@ -21,13 +22,28 @@ public class Player {
     private int numberOfWinningPieces;
     //Number of moves
     private int numberOfMoves;
+    private PieceStorage piecePositions;
+    //true if Human; false if Computer
+    private boolean human;
 
-    public Player(PieceType playerType, int playerScore, int numberOfWinningPieces, int numberOfMoves) {
+    public Player(PieceType playerType, double playerScore, int numberOfWinningPieces, int numberOfMoves, PieceStorage piecePositions) {
         this.playerType = playerType;
         this.playerScore = playerScore;
         this.numberOfWinningPieces = numberOfWinningPieces;
         this.numberOfMoves = numberOfMoves;
+        this.piecePositions = piecePositions;
     }
+
+    public Player(PieceType playerType, double playerScore, int numberOfWinningPieces, int numberOfMoves, PieceStorage piecePositions, boolean human) {
+        this.playerType = playerType;
+        this.playerScore = playerScore;
+        this.numberOfWinningPieces = numberOfWinningPieces;
+        this.numberOfMoves = numberOfMoves;
+        this.piecePositions = piecePositions;
+        this.human = human;
+    }
+    
+    
 
     public void addOneToMove() {
         ++numberOfMoves;
@@ -40,15 +56,15 @@ public class Player {
             this.setNumberOfWinningPieces(newNumberOfWinningPieces);
             return true;
         }
-        
+
         return false;
     }
 
     public void subtractOneToNumberOfWinningPieces() {
         this.setNumberOfWinningPieces(this.getNumberOfWinningPieces() - 1);
     }
-    
-    public void updatePlayerScore(Double newScore){
+
+    public void updatePlayerScore(Double newScore) {
         playerScore += newScore;
     }
 
@@ -76,5 +92,22 @@ public class Player {
         this.playerScore = playerScore;
     }
 
+    public PieceStorage getPiecePositions() {
+        return piecePositions;
+    }
+
+    public void setPiecePositions(PieceStorage piecePositions) {
+        this.piecePositions = piecePositions;
+    }
+
+    public boolean isHuman() {
+        return human;
+    }
+
+    public void setHumar(boolean human) {
+        this.human = human;
+    }
+
     
+
 }

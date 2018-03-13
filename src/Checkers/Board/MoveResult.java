@@ -11,14 +11,14 @@ package Checkers.Board;
  */
 public class MoveResult {
     
-    private PossibleMoves moveType;
+    private MoveType moveType;
     private Piece hoppedPiece;
 
-    public MoveResult(PossibleMoves moveType) {
+    public MoveResult(MoveType moveType) {
         this.moveType = moveType;
     }
     
-    public MoveResult(PossibleMoves moveType, Piece hoppedPiece) {
+    public MoveResult(MoveType moveType, Piece hoppedPiece) {
         this.moveType = moveType;
         this.hoppedPiece = hoppedPiece;
     }
@@ -27,7 +27,7 @@ public class MoveResult {
         return hoppedPiece;
     }
 
-    public PossibleMoves getMoveType() {
+    public MoveType getMoveType() {
         return moveType;
     }
     

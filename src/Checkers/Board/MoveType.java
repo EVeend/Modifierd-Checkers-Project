@@ -9,6 +9,6 @@ package Checkers.Board;
  *
  * @author edwar
  */
-public enum PossibleMoves {
+public enum MoveType {
     NONE, NORMAL, SWAP
 }

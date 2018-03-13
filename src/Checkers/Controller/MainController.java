@@ -41,5 +41,19 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    public void humanVcomputerBoard(ActionEvent event) {
+        try {
+            System.out.println("Human vs. Computer");
+            Parent humanVcomputerBoard = FXMLLoader.load(getClass().getClassLoader().getResource("Checkers/Design/choose.fxml"));
+            Scene scene = new Scene(humanVcomputerBoard, 492, 315);
+            Stage primaryStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            primaryStage.setTitle("CheckersApp");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

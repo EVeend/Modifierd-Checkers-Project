@@ -19,5 +19,11 @@ public class PieceStorage {
     public ArrayList<Piece> getPieceStorage() {
         return pieceStorage;
     }
+
+    public void setPieceStorage(ArrayList<Piece> pieceStorage) {
+        this.pieceStorage = pieceStorage;
+    }
+    
+    
       
 }

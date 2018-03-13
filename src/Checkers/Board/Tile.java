@@ -32,7 +32,13 @@ public class Tile extends Rectangle {
 
     
     public boolean hasPiece() {
-        return piece != null;
+        if(piece != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+//        return piece != null;
     }
 
     public Piece getPiece() {
