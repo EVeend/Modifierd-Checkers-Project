@@ -1085,19 +1085,19 @@ public class BoardAIWhiteController implements Initializable {
 
         if (isForwardMove(piece, newX, newY)) {
             System.out.println("ForwardMove");
-            gN = 2;
+            gN = 3;
         } else if (isBackMove(piece, newX, newY)) {
             System.out.println("Back Move");
             gN = 0;
         } else if (isHopMove(piece, newX, newY)) {
             System.out.println("Hop move");
-            gN = 1;
+            gN = 2;
         } else if (isDoubleHop(piece, newX, newY)) {
             System.out.println("Double Hop Move");
-            gN = 1;
+            gN = 2;
         } else if (isSwap(piece, newX, newY)) {
             System.out.println("Swap Move");
-            gN = 1;
+            gN = 2;
         }
 
         if (board[newX][newY].isEnemyTile(player)) {
@@ -1191,6 +1191,8 @@ public class BoardAIWhiteController implements Initializable {
             }
             System.out.println("White Player Score: " + whitePlayer.getPlayerScore());
             System.out.println("Black Player Score: " + blackPlayer.getPlayerScore());
+            whitePlayer.setNumberOfWinningPieces(0);
+            blackPlayer.setNumberOfWinningPieces(0);
         }
     }
 
@@ -1213,23 +1215,15 @@ public class BoardAIWhiteController implements Initializable {
     public void forfeitGame(ActionEvent event) throws IOException {
         if (moveOrder = false) {
             System.out.println("WHITE WINS!");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Congratulations!");
-            alert.setHeaderText(null);
-            alert.setContentText("White wins!");
-            alert.showAndWait();
-            whitePlayer.updatePlayerScore(1 - (whitePlayer.getNumberOfMoves() * .01));
-            blackPlayer.updatePlayerScore(0 + (blackPlayer.getNumberOfMoves() * .01));
+            whitePlayer.updatePlayerScore(0.0);
+            blackPlayer.updatePlayerScore(0.8);
+            AlertBox.display("Congratulations!", "White wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), event);
 
         } else {
             System.out.println("BLACK WINS!");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Congratulations!");
-            alert.setHeaderText(null);
-            alert.setContentText("Black wins!");
-            alert.showAndWait();
-            whitePlayer.updatePlayerScore(0 + (whitePlayer.getNumberOfMoves() * .01));
-            blackPlayer.updatePlayerScore(1 - (blackPlayer.getNumberOfMoves() * .01));
+            whitePlayer.updatePlayerScore(0.8);
+            blackPlayer.updatePlayerScore(0.0);
+            AlertBox.display("Congratulations!", "BLACK wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), event);
 
         }
     }

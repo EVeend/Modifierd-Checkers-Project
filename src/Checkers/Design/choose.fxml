@@ -17,11 +17,6 @@
             <Font name="Optima Regular" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="playBlackBTN" layoutX="178.0" layoutY="220.0" mnemonicParsing="false" onAction="#playBlack" prefHeight="27.0" prefWidth="140.0" style="-fx-background-color: coral;" text="Play as Black">
-         <font>
-            <Font name="Optima Regular" size="13.0" />
-         </font>
-      </Button>
       <Button fx:id="backBTN" layoutX="178.0" layoutY="260.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="140.0" style="-fx-background-color: gold;" text="Back">
          <font>
             <Font name="Optima Regular" size="13.0" />

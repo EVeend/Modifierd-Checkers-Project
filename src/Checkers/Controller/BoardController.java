@@ -763,23 +763,15 @@ public class BoardController implements Initializable {
     public void forfeitGame(ActionEvent event) throws IOException {
         if (moveOrder = false) {
             System.out.println("WHITE WINS!");
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Congratulations!");
-            alert.setHeaderText(null);
-            alert.setContentText("White wins!");
-            alert.showAndWait();
-            whitePlayer.updatePlayerScore(1 - (whitePlayer.getNumberOfMoves() * .01));
-            blackPlayer.updatePlayerScore(0 + (blackPlayer.getNumberOfMoves() * .01));
+            whitePlayer.updatePlayerScore(0.0);
+            blackPlayer.updatePlayerScore(0.8);
+            AlertBox.display("Congratulations!", "White wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), event);
 
         } else {
             System.out.println("BLACK WINS!");
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Congratulations!");
-            alert.setHeaderText(null);
-            alert.setContentText("Black wins!");
-            alert.showAndWait();
-            whitePlayer.updatePlayerScore(0 + (whitePlayer.getNumberOfMoves() * .01));
-            blackPlayer.updatePlayerScore(1 - (blackPlayer.getNumberOfMoves() * .01));
+            whitePlayer.updatePlayerScore(0.8);
+            blackPlayer.updatePlayerScore(0.0);
+            AlertBox.display("Congratulations!", "BLACK wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), event);
 
         }
     }

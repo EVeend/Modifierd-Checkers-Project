@@ -28,7 +28,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -93,8 +92,8 @@ public class BoardAIBlackController implements Initializable {
 
         whitePlayer = new Player(PieceType.WHITE, 0, 0, 0, whitePieceStorage, false);
         blackPlayer = new Player(PieceType.BLACK, 0, 0, 0, blackPieceStorage, true);
-        listOfPlayer.add(whitePlayer);
         listOfPlayer.add(blackPlayer);
+        listOfPlayer.add(whitePlayer);
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -155,10 +154,10 @@ public class BoardAIBlackController implements Initializable {
                     blackPlayer.addOneToMove();
                     moveOrder = true;
                     System.out.println("Move order now false");
-                    System.out.println("White made: " + blackPlayer.getNumberOfMoves() + " moves");
-                    movesWhite.setText(Integer.toString(blackPlayer.getNumberOfMoves()));
+                    System.out.println("Black made: " + blackPlayer.getNumberOfMoves() + " moves");
+                    movesBlack.setText(Integer.toString(blackPlayer.getNumberOfMoves()));
                     blackPlayer.addOneToNumberOfWinningPieces(piece, board[newX][newY]);
-                    System.out.println("White Player Winning Pieces: " + blackPlayer.getNumberOfWinningPieces());
+                    System.out.println("Black Player Winning Pieces: " + blackPlayer.getNumberOfWinningPieces());
                     //to this line, eto yung ilalagay sa pass method
 
                     //Iterate through this piece storage
@@ -197,16 +196,16 @@ public class BoardAIBlackController implements Initializable {
             return new MoveResult(MoveType.NONE);
         }
 
-        //Invalid Moves
-        if (board[newX][newY].hasPiece()) {
-            if (!validSwapMove(piece, newX, newY)) {
-                System.out.println("Invalid Move 1");
-                return new MoveResult(MoveType.NONE);
-            } else {
-                return new MoveResult(MoveType.SWAP);
-            }
-
-        }
+//        //Invalid Moves
+//        if (board[newX][newY].hasPiece()) {
+//            if (!validSwapMove(piece, newX, newY)) {
+//                System.out.println("Invalid Move 1");
+//                return new MoveResult(MoveType.NONE);
+//            } else {
+//                return new MoveResult(MoveType.SWAP);
+//            }
+//
+//        }
 
         if (((piece.getOldX() + piece.getOldY()) / tileSize) % 2 == 0 && (newX + newY) % 2 == 0) {
             if (!validHopMove(piece, newX, newY)) {
@@ -447,33 +446,21 @@ public class BoardAIBlackController implements Initializable {
                 System.out.println("X == 0");
                 if (oldY == 0) {
                     if (!board[oldX][oldY + 1].hasPiece()) {
+                        System.out.println("Sit1");
                         move = new PossibleMove(storedPiece, oldX, oldY + 1);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
-
                     }
                     if (!board[oldX + 1][oldY].hasPiece()) {
+                        System.out.println("Sit2");
                         move = new PossibleMove(storedPiece, oldX + 1, oldY);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
                     }
-                    //Start of swap
-                    if (board[oldX][oldY + 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY + 1].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX, oldY + 1);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    }
-                    if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX + 1, oldY);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    } //Start of hop
+                    //Start of hop
                     if (!board[oldX][oldY + 2].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit3");
                         System.out.println("Hop");
                         move = new PossibleMove(storedPiece, oldX, oldY + 2);
                         System.out.println(move.toString());
@@ -481,6 +468,7 @@ public class BoardAIBlackController implements Initializable {
 
                     }
                     if (!board[oldX + 2][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit4");
                         System.out.println("Hop");
                         move = new PossibleMove(storedPiece, oldX + 2, oldY);
                         System.out.println(move.toString());
@@ -488,6 +476,7 @@ public class BoardAIBlackController implements Initializable {
 
                     } //Start of double hop
                     if (!board[oldX + 3][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit5");
                         System.out.println("Double Hop");
                         move = new PossibleMove(storedPiece, oldX + 3, oldY);
                         System.out.println(move.toString());
@@ -495,8 +484,26 @@ public class BoardAIBlackController implements Initializable {
 
                     }
                     if (!board[oldX][oldY + 3].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit6");
                         System.out.println("Double Hop");
                         move = new PossibleMove(storedPiece, oldX, oldY + 3);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    //Start of swap
+                    if (board[oldX][oldY + 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY + 1].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Sit7");
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX, oldY + 1);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Sit8");
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX + 1, oldY);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
@@ -505,32 +512,21 @@ public class BoardAIBlackController implements Initializable {
                 } //X == 0
                 else if (oldY == 3) {
                     if (!board[oldX + 1][oldY].hasPiece()) {
+                        System.out.println("Sit9");
                         move = new PossibleMove(storedPiece, oldX + 1, oldY);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
                     }
                     if (!board[oldX][oldY - 1].hasPiece()) {
-                        move = new PossibleMove(storedPiece, oldX, oldY - 1);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    } //Start of Swap
-                    if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX + 1, oldY);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    }
-                    if (board[oldX][oldY - 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY - 1].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
+                        System.out.println("Sit10");
                         move = new PossibleMove(storedPiece, oldX, oldY - 1);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
                     } //Start pf hop
                     if (!board[oldX][oldY - 2].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit11");
                         System.out.println("Hop");
                         move = new PossibleMove(storedPiece, oldX, oldY - 2);
                         System.out.println(move.toString());
@@ -538,6 +534,7 @@ public class BoardAIBlackController implements Initializable {
 
                     }
                     if (!board[oldX + 2][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit12");
                         System.out.println("Hop");
                         move = new PossibleMove(storedPiece, oldX + 2, oldY);
                         System.out.println(move.toString());
@@ -545,6 +542,7 @@ public class BoardAIBlackController implements Initializable {
 
                     } //Start of double hop
                     if (!board[oldX + 3][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit13");
                         System.out.println("Double Hop");
                         move = new PossibleMove(storedPiece, oldX + 3, oldY);
                         System.out.println(move.toString());
@@ -552,55 +550,55 @@ public class BoardAIBlackController implements Initializable {
 
                     }
                     if (!board[oldX][oldY - 3].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit14");
                         System.out.println("Double Hop");
                         move = new PossibleMove(storedPiece, oldX, oldY - 3);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
                     }
+////Start of Swap
+//                    if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
+//                        System.out.println("Swap");
+//                        move = new PossibleMove(storedPiece, oldX + 1, oldY);
+//                        System.out.println(move.toString());
+//                        possibleMoveList.add(move);
+//
+//                    }
+                    if (board[oldX][oldY - 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY - 1].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Sit15");
+                        System.out.println(board[oldX][oldY - 1].getPiece().getType());
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX, oldY - 1);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
 
+                    }
                 } //X == 0
                 else if (oldY == 1 || oldY == 2) {
                     if (!board[oldX][oldY - 1].hasPiece()) {
+                        System.out.println("Sit16");
                         move = new PossibleMove(storedPiece, oldX, oldY - 1);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
                     }
                     if (!board[oldX + 1][oldY].hasPiece()) {
+                        System.out.println("Sit17");
                         move = new PossibleMove(storedPiece, oldX + 1, oldY);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
                     }
                     if (!board[oldX][oldY + 1].hasPiece()) {
+                        System.out.println("Sit18");
                         move = new PossibleMove(storedPiece, oldX, oldY + 1);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
-                    } //Start of swap
-                    if (board[oldX][oldY - 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY - 1].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX, oldY - 1);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    }
-                    if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX + 1, oldY);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    }
-                    if (board[oldX][oldY + 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY + 1].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX, oldY + 1);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    } //Start of hop
+                    }//Start of hop
                     if (!board[oldX + 2][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit19");
                         System.out.println("Hop");
                         move = new PossibleMove(storedPiece, oldX, oldY + 1);
                         System.out.println(move.toString());
@@ -608,7 +606,33 @@ public class BoardAIBlackController implements Initializable {
 
                     }
                     if (!board[oldX + 3][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Sit20");
                         System.out.println("double hop");
+                        move = new PossibleMove(storedPiece, oldX, oldY + 1);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    //Start of swap
+                    if (board[oldX][oldY - 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY - 1].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Sit21");
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX, oldY - 1);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Sit22");
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX + 1, oldY);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    if (board[oldX][oldY + 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY + 1].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Sit23");
+                        System.out.println("Swap");
                         move = new PossibleMove(storedPiece, oldX, oldY + 1);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
@@ -631,21 +655,7 @@ public class BoardAIBlackController implements Initializable {
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
-                    } //Start of Swap
-                    if (board[oldX - 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX - 1][oldY].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX - 1, oldY);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    }
-                    if (board[oldX][oldY + 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY + 1].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX, oldY + 1);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    } //Start of hops
+                    }  //Start of hops
                     if (!board[oldX - 2][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
                         System.out.println("hop");
                         move = new PossibleMove(storedPiece, oldX - 2, oldY);
@@ -672,6 +682,19 @@ public class BoardAIBlackController implements Initializable {
                         move = new PossibleMove(storedPiece, oldX - 3, oldY);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
+                    }//Start of Swap
+                    if (board[oldX - 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX - 1][oldY].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX - 1, oldY);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    if (board[oldX][oldY + 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY + 1].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX, oldY + 1);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
 
                     }
 
@@ -688,21 +711,7 @@ public class BoardAIBlackController implements Initializable {
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
-                    } //Swap
-                    if (board[oldX - 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX - 1][oldY].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX - 1, oldY);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    }
-                    if (board[oldX][oldY - 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY - 1].getPiece().getType() != storedPiece.getType()) {
-                        System.out.println("Swap");
-                        move = new PossibleMove(storedPiece, oldX, oldY - 1);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    } //Hop
+                    }  //Hop
                     if (!board[oldX][oldY - 2].hasPiece() && hasNoForwardMove(storedPiece)) {
                         System.out.println("Hop");
                         move = new PossibleMove(storedPiece, oldX, oldY - 2);
@@ -729,6 +738,20 @@ public class BoardAIBlackController implements Initializable {
                         move = new PossibleMove(storedPiece, oldX, oldY - 3);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
+                    }
+                    //Swap
+                    if (board[oldX - 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX - 1][oldY].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX - 1, oldY);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    if (board[oldX][oldY - 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY - 1].getPiece().getType() != storedPiece.getType()) {
+                        System.out.println("Swap");
+                        move = new PossibleMove(storedPiece, oldX, oldY - 1);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
 
                     }
                 } //X == 3
@@ -750,7 +773,22 @@ public class BoardAIBlackController implements Initializable {
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
-                    } //Swap
+                    } //Start of Hop
+                    if (!board[oldX - 2][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Hop");
+                        move = new PossibleMove(storedPiece, oldX - 2, oldY);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    } //Start of Double hop
+                    if (!board[oldX - 3][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
+                        System.out.println("Double Hop");
+                        move = new PossibleMove(storedPiece, oldX - 3, oldY);
+                        System.out.println(move.toString());
+                        possibleMoveList.add(move);
+
+                    }
+                    //Swap
                     if (board[oldX][oldY - 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY - 1].getPiece().getType() != storedPiece.getType()) {
                         System.out.println("Swap");
                         move = new PossibleMove(storedPiece, oldX, oldY - 1);
@@ -768,20 +806,6 @@ public class BoardAIBlackController implements Initializable {
                     if (board[oldX][oldY + 1].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX][oldY + 1].getPiece().getType() != storedPiece.getType()) {
                         System.out.println("Swap");
                         move = new PossibleMove(storedPiece, oldX, oldY + 1);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    } //Start of Hop
-                    if (!board[oldX - 2][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
-                        System.out.println("Hop");
-                        move = new PossibleMove(storedPiece, oldX - 2, oldY);
-                        System.out.println(move.toString());
-                        possibleMoveList.add(move);
-
-                    } //Start of Double hop
-                    if (!board[oldX - 3][oldY].hasPiece() && hasNoForwardMove(storedPiece)) {
-                        System.out.println("Double Hop");
-                        move = new PossibleMove(storedPiece, oldX - 3, oldY);
                         System.out.println(move.toString());
                         possibleMoveList.add(move);
 
@@ -808,7 +832,22 @@ public class BoardAIBlackController implements Initializable {
                     System.out.println(move.toString());
                     possibleMoveList.add(move);
 
-                } //Start of Swap
+                } //Hop
+                if (!board[oldX][oldY + 2].hasPiece() && hasNoForwardMove(storedPiece)) {
+                    System.out.println("Hop");
+                    move = new PossibleMove(storedPiece, oldX, oldY + 2);
+                    System.out.println(move.toString());
+                    possibleMoveList.add(move);
+
+                } //Double hop
+                if (!board[oldX][oldY + 2].hasPiece() && hasNoForwardMove(storedPiece)) {
+                    System.out.println("Double Hop");
+                    move = new PossibleMove(storedPiece, oldX, oldY + 3);
+                    System.out.println(move.toString());
+                    possibleMoveList.add(move);
+
+                }
+                //Start of Swap
                 if (board[oldX - 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX - 1][oldY].getPiece().getType() != storedPiece.getType()) {
                     System.out.println("Swap");
                     move = new PossibleMove(storedPiece, oldX - 1, oldY);
@@ -829,22 +868,7 @@ public class BoardAIBlackController implements Initializable {
                     System.out.println(move.toString());
                     possibleMoveList.add(move);
 
-                } //Hop
-                if (!board[oldX][oldY + 2].hasPiece() && hasNoForwardMove(storedPiece)) {
-                    System.out.println("Hop");
-                    move = new PossibleMove(storedPiece, oldX, oldY + 2);
-                    System.out.println(move.toString());
-                    possibleMoveList.add(move);
-
-                } //Double hop
-                if (!board[oldX][oldY + 2].hasPiece() && hasNoForwardMove(storedPiece)) {
-                    System.out.println("Double Hop");
-                    move = new PossibleMove(storedPiece, oldX, oldY + 3);
-                    System.out.println(move.toString());
-                    possibleMoveList.add(move);
-
                 }
-
             }
             if (oldY == 3 && oldX < 3 && oldX > 0) {
                 System.out.println("Y == 3");
@@ -880,13 +904,13 @@ public class BoardAIBlackController implements Initializable {
                     possibleMoveList.add(move);
 
                 }
-                if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
-                    System.out.println("Swap");
-                    move = new PossibleMove(storedPiece, oldX + 1, oldY);
-                    System.out.println(move.toString());
-                    possibleMoveList.add(move);
-
-                } //Hop
+//                if (board[oldX + 1][oldY].hasPiece() && hasNoForwardMove(storedPiece) && board[oldX + 1][oldY].getPiece().getType() != storedPiece.getType()) {
+//                    System.out.println("Swap");
+//                    move = new PossibleMove(storedPiece, oldX + 1, oldY);
+//                    System.out.println(move.toString());
+//                    possibleMoveList.add(move);
+//
+//                } //Hop
                 if (board[oldX][oldY - 2].hasPiece() && hasNoForwardMove(storedPiece)) {
                     System.out.println("Hop");
                     move = new PossibleMove(storedPiece, oldX - 2, oldY);
@@ -1093,7 +1117,7 @@ public class BoardAIBlackController implements Initializable {
     public void AIMove() {
         //AI Turn to move
         System.out.println("Start alpha beta prun");
-        ArrayList<PossibleMove> possibleMoveList = getPossibleMoves(blackPlayer);
+        ArrayList<PossibleMove> possibleMoveList = getPossibleMoves(whitePlayer);
         PlayerMove newPlayerMove = null;
         //gets first possible forward move
         for (int i = 0; i < possibleMoveList.size(); i++) {
@@ -1101,7 +1125,7 @@ public class BoardAIBlackController implements Initializable {
             int newPostX = possibleMoveList.get(i).getNewXPost();
             int newPostY = possibleMoveList.get(i).getNewYPost();
             if (isForwardMove(currentPiece, newPostX, newPostY)) {
-                newPlayerMove = AlphaBetaPrunBlack.startAlphaBet(4, possibleMoveList.get(i), listOfPlayer, 1);
+                newPlayerMove = AlphaBetaPrunBlack.startAlphaBet(4, possibleMoveList.get(i), listOfPlayer, 0);
                 break;
             }
         }
@@ -1128,13 +1152,13 @@ public class BoardAIBlackController implements Initializable {
         System.out.println("OldXPost: " + oldXPost + " OldYPost: " + oldYPost);
         if (doMove(newPlayerMove.getPlayerType(), newPiece)) {
             System.out.println("PlayerMove OldX: ");
-            blackPlayer.addOneToMove();
-            moveOrder = true;
+            whitePlayer.addOneToMove();
+            moveOrder = false;
             pieceTurn.setText("Black's turn!");
             System.out.println("White made: " + whitePlayer.getNumberOfMoves() + " moves");
             movesWhite.setText(Integer.toString(whitePlayer.getNumberOfMoves()));
             whitePlayer.addOneToNumberOfWinningPieces(newPiece, board[newX][newY]);
-            System.out.println("Black Player Winning Pieces: " + whitePlayer.getNumberOfWinningPieces());
+            System.out.println("White Player Winning Pieces: " + whitePlayer.getNumberOfWinningPieces());
             System.out.println("NewPiece OldX: " + newPiece.getOldX());
             System.out.println("NewPiece OldY: " + newPiece.getOldY());
             //Iterate through this piece storage
@@ -1142,7 +1166,7 @@ public class BoardAIBlackController implements Initializable {
 
             //Update the new position of the current piece
             System.out.println("Update Position");
-            for (int i = 0; i < blackPieceStorage.getPieceStorage().size(); i++) {
+            for (int i = 0; i < whitePieceStorage.getPieceStorage().size(); i++) {
                 System.out.println("Stored Old Positions: " + whitePlayer.getPiecePositions().getPieceStorage().get(i).getOldX() + " " + whitePlayer.getPiecePositions().getPieceStorage().get(i).getOldY());
                 System.out.println("Old Positions: " + oldXPost + " " + oldYPost);
                 System.out.println(whitePlayer.getPiecePositions().getPieceStorage().get(i).getOldX() == oldXPost);
@@ -1159,20 +1183,25 @@ public class BoardAIBlackController implements Initializable {
     public void checkIfHasWinner(MouseEvent e) {
         //Check if there is already a winner
         if (whitePlayer.getNumberOfWinningPieces() > 0 && blackPlayer.getNumberOfWinningPieces() > 0) {
-            if (whitePlayer.getNumberOfWinningPieces() == 6) {
+            if (whitePlayer.getNumberOfWinningPieces() == -6) {
                 System.out.println("WHITE WINS!");
                 whitePlayer.updatePlayerScore(1 - (whitePlayer.getNumberOfMoves() * .01));
                 blackPlayer.updatePlayerScore(0 + (blackPlayer.getNumberOfMoves() * .01));
                 AlertBox.display("Congratulations!", "White wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), e);
+                whitePlayer.setNumberOfWinningPieces(0);
+                blackPlayer.setNumberOfWinningPieces(0);
 
-            } else if (blackPlayer.getNumberOfWinningPieces() == 6) {
+            } else if (blackPlayer.getNumberOfWinningPieces() == -6) {
                 System.out.println("BLACK WINS!");
                 whitePlayer.updatePlayerScore(0 + (whitePlayer.getNumberOfMoves() * .01));
                 blackPlayer.updatePlayerScore(1 - (blackPlayer.getNumberOfMoves() * .01));
                 AlertBox.display("Congratulations!", "Black wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), e);
+                whitePlayer.setNumberOfWinningPieces(0);
+                blackPlayer.setNumberOfWinningPieces(0);
             }
             System.out.println("White Player Score: " + whitePlayer.getPlayerScore());
             System.out.println("Black Player Score: " + blackPlayer.getPlayerScore());
+
         }
     }
 
@@ -1195,23 +1224,15 @@ public class BoardAIBlackController implements Initializable {
     public void forfeitGame(ActionEvent event) throws IOException {
         if (moveOrder = false) {
             System.out.println("WHITE WINS!");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Congratulations!");
-            alert.setHeaderText(null);
-            alert.setContentText("White wins!");
-            alert.showAndWait();
-            whitePlayer.updatePlayerScore(1 - (whitePlayer.getNumberOfMoves() * .01));
-            blackPlayer.updatePlayerScore(0 + (blackPlayer.getNumberOfMoves() * .01));
+            whitePlayer.updatePlayerScore(0.0);
+            blackPlayer.updatePlayerScore(0.8);
+            AlertBox.display("Congratulations!", "White wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), event);
 
         } else {
             System.out.println("BLACK WINS!");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Congratulations!");
-            alert.setHeaderText(null);
-            alert.setContentText("Black wins!");
-            alert.showAndWait();
-            whitePlayer.updatePlayerScore(0 + (whitePlayer.getNumberOfMoves() * .01));
-            blackPlayer.updatePlayerScore(1 - (blackPlayer.getNumberOfMoves() * .01));
+            whitePlayer.updatePlayerScore(0.8);
+            blackPlayer.updatePlayerScore(0.0);
+            AlertBox.display("Congratulations!", "BLACK wins!", whitePlayer.getPlayerScore(), blackPlayer.getPlayerScore(), event);
 
         }
     }
