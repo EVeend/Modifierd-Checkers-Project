@@ -22,7 +22,7 @@ Rules:
 7. A hop moves a piece over one or two pieces (of either color) in the same direction to the
 nearest unoccupied cell. Hopping over pieces is usually not allowed.
 8. **Only when a player has no forward move may the player hop, swap two adjacent (up, down,
-**left, or right) pieces of different colors, or pass.**
+left, or right) pieces of different colors, or pass.**
 9. The game must count each move (including passes) made by each player. 
 
 ## Alpha Beta Pruning Algorithm
