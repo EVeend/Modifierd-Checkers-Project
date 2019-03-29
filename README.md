@@ -37,3 +37,8 @@ Alpha Beta Pruning is an optimized version of the Minimax algorithm where it cut
 The evaluation function that I used for this game is **f(n) = h(n) + g(n)** where:
 - h(n) - number of winning pieces or the number of allied pieces that is in the opponents side.
 - g(n) - score of a move, the score being as follows:
+          - Forward Move = 2
+          - Backward Move = 0
+          - Hope Move = 1
+          - Double Hop Move = 1
+          - Swap Move = 1
