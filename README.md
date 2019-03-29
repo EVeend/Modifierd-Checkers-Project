@@ -43,3 +43,6 @@ The evaluation function that I used for this game is **f(n) = h(n) + g(n)** wher
   - Hope Move = 1
   - Double Hop Move = 1
   - Swap Move = 1
+
+
+This project was made in collaboration with Laiza Marie Alcones, Vince Rafael Larosa and Carrie Lyle Untalan. These people helped in designing and coding the front end part of the project. 
