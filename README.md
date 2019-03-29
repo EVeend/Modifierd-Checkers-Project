@@ -1,5 +1,6 @@
 # Modifierd-Checkers-Project
 
+## Mechanics
 Given:
   A 4x4 board initially has 9 white pieces on upper left cells and 9 black pieces on bottom right
   cells (leftmost diagram below). Columns are labeled A to D from the left while rows are labeled
@@ -23,3 +24,16 @@ nearest unoccupied cell. Hopping over pieces is usually not allowed.
 8. Only when a player has no forward move may the player hop, swap two adjacent (up, down,
 left, or right) pieces of different colors, or pass.
 9. The game must count each move (including passes) made by each player. 
+
+## Alpha Beta Pruning Algorithm
+
+Alpha Beta Pruning is an optimized version of the Minimax algorithm where it cuts of branches in the tree that is not needed to be search because there are already better branches available. This algorithm takes in two extra parameters which are Alpha and Beta. 
+
+Alpha - the maximum value or the best highest value.
+Beta - the minimum value or the best lowest value. 
+
+###Evaluation function for the Modified Checkers game
+
+The evaluation function that I used for this game is f(n) = h(n) + g(n) where:
+- h(n) - number of winning pieces or the number of allied pieces that is in the opponents side.
+- g(n) - score of a move, the score being as follows:
