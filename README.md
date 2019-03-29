@@ -27,12 +27,13 @@ left, or right) pieces of different colors, or pass.**
 
 ## Alpha Beta Pruning Algorithm
 
-Alpha Beta Pruning is an optimized version of the Minimax algorithm where it cuts of branches in the tree that is not needed to be search because there are already better branches available. This algorithm takes in two extra parameters which are Alpha and Beta. 
+The algorithm for the AI in this game uses Alpha Beta Pruning. This is an optimized version of the Minimax algorithm where it cuts of branches in the tree that is not needed to be search because there are already better branches available. This algorithm takes in two extra parameters which are Alpha and Beta. 
 
 **Alpha** - the maximum value or the best highest value.
+
 **Beta** - the minimum value or the best lowest value. 
 
-### Evaluation function for the Modified Checkers game
+### Evaluation function of the AI for the Modified Checkers game
 
 The evaluation function that I used for this game is **f(n) = h(n) + g(n)** where:
 - h(n) - number of winning pieces or the number of allied pieces that is in the opponents side.
